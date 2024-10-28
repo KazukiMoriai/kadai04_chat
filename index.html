@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!-- 最初の設定は終わっています　必要な方は触ってください -->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>LoveYourCars</title>
+  <!-- サイト全体のフォント -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <!-- topのLoveYourCarsのフォント -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+  <!-- jQuery読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!-- <script type = "text/javascript" src="js/main.js"></script> -->
+  <style>
+    a {
+        color: inherit; /* 親要素の色を継承する */
+        text-decoration: none; /* 下線を消す */
+    }
+</style>
+</head>
+<!-- 最初の設定は終わっています　必要な方は触ってください -->
+
+<body>
+  <!-- ここから下にコードを書く -->
+  <header>
+    Welcome to "LoveYourCars" 
+  </header>
+
+  <!-- 以下top -->
+  <div class="top">
+    <div class="t0"></div>
+    <div class="t1">
+      <span class="t11">
+        <span class="t111">=</span>
+        <span class="t112"><a href="https://kazukimoriai.github.io/kadai02_janken_rich/index3.html"target="_blank" rel="noopener noreferrer">Buy</a></span>
+        <span class="t113"><a href="https://kazukimoriai.github.io/kadai02_janken_rich/index2.html"target="_blank" rel="noopener noreferrer">Sell</a></span>
+        <span class="t114">Assesment</span>
+      </span>
+      <span class="t12">LoveYourCars</span>
+      <span class="t13">
+        <span class="t131">Sing In</span>
+      </span>
+    </div>
+    <div class="t2">
+      <div class="t21">Life won’t wait.</div>
+      <div class="t22">There’s always light behind the clouds.</div>
+    <div class="t3">
+      <span class="t31">Shop</span>
+      <span class="t32">Explore</span>
+    </div>
+  </div>
+  <!-- ここまでtop -->
+
+  <!-- 以下口コミ -->
+  <div>
+    <div> 名前：<input type="text" id="uname"> </div>
+    <div>
+        <textarea id="text" cols="30" rows="10"></textarea>
+        <button id="send">送信</button>
+    </div>
+    <div id="output"></div>
+</div>
+
+
+
+  <!-- 以下Firebase -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getDatabase, ref, push, set, update, remove, onChildAdded, onChildRemoved, onChildChanged } 
+    from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+   
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDLwGz1SDAgajYmSK723ZxBbUAUMzuozWI",
+      authDomain: "gschat-3903d.firebaseapp.com",
+      projectId: "gschat-3903d",
+      storageBucket: "gschat-3903d.appspot.com",
+      messagingSenderId: "1084638522332",
+      appId: "1:1084638522332:web:f537e6511e7f7fde653d19"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);//RealtimeDBに接続
+    const dbRef = ref(db, "chat");//chatを選択
+
+    // 送信処理
+    $("#send").on("click",function(){
+    const msg = {
+        uname:$("#uname").val(),
+        text:$("#text").val()
+    }
+    const id = push(dbRef);//ユニークKEYを取得
+    set(id,msg);//データ登録
+    });
+
+    // 受信処理
+    onChildAdded(dbRef,function(data){
+          const msg = data.val();//objで受け取り
+          const key = data.key;//ユニークKEYを受け取り 削除更新に必須
+          let h ='<p id= "'+key+'">' ;
+              h += msg.uname;
+              h += '<br>';
+              h += '<span contentEditable= "true" id= "'+key+'"_update>'+msg.text+'</span>';
+              h += '<span class="remove" data-key= "'+key+'">🚮</span>';
+              h += '<span class="update" data-key= "'+key+'">🆙</span>';
+              h += '</p>';
+          $("#output").append(h);//#outputの最後に追加
+      });
+
+    // 削除機能
+    $("#output").on("click", ".remove", function(){ //id=output の中に追加されるclass = removeを監視する
+        const key = $(this).attr("data-key");
+        const remove_item =ref(db, "chat/"+key);
+        remove(remove_item);
+    });
+
+    // 更新機能
+    $("#output").on("click", ".update", function(){ //id=output の中に追加されるclass = updateを監視する
+        const key = $(this).attr("data-key");
+        update(ref(db, "chat/"+key), {
+            text: $("#"+key+'_update').html()
+        });
+    });
+
+    // 削除処理がFirebase側で事項されたらイベント発生
+    onChildRemoved(dbRef, (data) =>{
+        $("#"+data.key).remove();  //DOM操作関数（対象を削除）
+    });
+
+    // 更新処理がFirebase側で事項されたらイベント発生
+    onChildChanged(dbRef, (data) =>{
+        $("#"+data.key+'_update').html(data.val().text);
+        $("#"+data.key+'_update').fadeOut(800).fadeIn(800);
+    });
+    </script>
+</body>
+</html>
