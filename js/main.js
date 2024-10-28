@@ -1,16 +1,22 @@
-// jsを記述する際はここに記載していく
+$(document).ready(function () {
+    // モーダルをダイアログとして設定
+    $("#myModal").dialog({
+        autoOpen: false, // 自動では開かない設定
+        modal: true,     // モーダル外クリックをブロックする設定
+        buttons: {
+            "close": function () { // モーダル内に「閉じる」ボタンを追加
+                $(this).dialog("close"); // ボタンが押されたらモーダルを閉じる
+            }
+        }
+    });
 
-// const alertmes =()=>{
-//     alert("HelloWorld");
-// }
+    // 「モーダルを開く」ボタンがクリックされた時にモーダルを表示
+    $("#openModal").click(function () {
+        $("#myModal").dialog("open"); // モーダルを開く
+    });
 
-
-// const item = [1,2,3,4,5,6,7,8,9,10]
-// const result = item.filter(function(value){
-//     return value < 8
-// })
-
-// console.log(result);
-
-// const div = document.querySelector('div')
-// console.log(div.dataset.name)
+    // モーダルの外側（背景部分）をクリックした時にモーダルを閉じる
+    $(document).on("click", ".ui-widget-overlay", function () {
+        $("#myModal").dialog("close"); // 背景をクリックするとモーダルを閉じる
+    });
+});

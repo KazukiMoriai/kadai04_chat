@@ -28,8 +28,6 @@
         text-decoration: none; /* 下線を消す */
     }
 </style>
-
-
 </head>
 <!-- 最初の設定は終わっています　必要な方は触ってください -->
 
@@ -37,30 +35,99 @@
 <body>
   <!-- ここから下にコードを書く -->
 
-  <!-- 以下top -->
-  <div class="top">
-    <div class="t0"></div>
-    <div class="t1">
-      <span class="t11">
-        <span class="t111">=</span>
-        <span class="t112">Buy</span>
-        <span class="t113">Sell</span>
-        <span class="t114">Assesment</span>
-      </span>
-      <span class="t12"><a href="https://kazukimoriai.github.io/kadai02_janken_rich/">LoveYourCars</a></span>
-      <span class="t13">
-        <span class="t131">Sing In</span>
 
-      </span>
+  <div class="check">
+    <div class="co2521">
+      <input type="checkbox" name="brand" id="po">ポルシェ
     </div>
-
+    <div class="co2522">
+      <input type="checkbox" name="brand" id="me">ベンツ
+    </div>
+    <div class="co2523">
+      <input type="checkbox" name="brand" id="au">アウディ
+    </div>
+    <div class="co2524">
+      <input type="checkbox" name="brand" id="bm">BMW
+    </div>
   </div>
-  <!-- ここまでtop -->
+
+  <div id="button">検索
+  </div>
+
+<div class="certain">
+  <div id="ex">検索結果</div>
+  <div id="list1"></div>
+  <div id="list2"></div>
+  <div id="list3"></div>
+  <div id="list4"></div>
+  <div id="list5"></div>
+</div>
+
+
+<script>
+window.onload = function(){
+  alert("ようこそ");
+}
+
+
+  const listall = [ 
+    {label: "車1", brand: "porsche", madein:2020},
+    {label: "車2", brand: "mercedes", madein:2020},
+    {label: "車3", brand: "audi", madein:2020},
+    {label: "車4", brand: "bmw", madein:2020},
+    {label: "車5", brand: "bmw", madein:2020},
+    {label: "車6", brand: "porsche", madein:2020},
+    {label: "車7", brand: "porsche", madein:2020},
+    {label: "車8", brand: "audi", madein:2020},
+    {label: "車9", brand: "audi", madein:2020},
+    {label: "車10", brand: "mercedes", madein:2020}
+  ];
+
+  document.getElementById("button").addEventListener("click", function() {
+    if (document.getElementById("po").checked) {
+      const po1 = "porsche";
+      const list1 = listall
+                    .filter(item => item.brand === po1)
+                    .map(item => item.label);
+      console.log(list1);
+      document.getElementById("list1").innerHTML = list1.join(", ");
+    } 
+    else if (document.getElementById("me").checked) {
+      const me1 = "mercedes";
+      const list2 = listall
+                    .filter(item => item.brand === me1)
+                    .map(item => item.label);
+      console.log(list2);
+      document.getElementById("list2").innerHTML = list2.join(", ");
+    } 
+    else if (document.getElementById("au").checked) {
+      const au1 = "audi";
+      const list3 = listall
+                    .filter(item => item.brand === au1)
+                    .map(item => item.label);
+      console.log(list3);
+      document.getElementById("list3").innerHTML = list3.join(", ");
+    } 
+    else if (document.getElementById("bm").checked) {
+      const bm1 = "bmw";
+      const list4 = listall
+                    .filter(item => item.brand === bm1)
+                    .map(item => item.label);
+      console.log(list4);
+      document.getElementById("list4").innerHTML = list4.join(", ");
+    }
+  });
+
+document.getElementById("button").addEventListener("click",function(){
 
 
 
 
 
+})
+
+
+</script>
 </body>
 
 </html>

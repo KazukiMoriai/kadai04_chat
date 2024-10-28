@@ -19,7 +19,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
   <!-- jQuery読み込み -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <!-- <script type = "text/javascript" src="js/main.js"></script> -->
+  
+    <script type = "text/javascript" src="js/main.js"></script>
+   <!-- jQuery UIのCSS CDN -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <!-- jQuery UIのJS CDN -->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <style>
     a {
         color: inherit; /* 親要素の色を継承する */
@@ -41,9 +47,9 @@
     <div class="t1">
       <span class="t11">
         <span class="t111">=</span>
-        <span class="t112"><a href="https://kazukimoriai.github.io/kadai02_janken_rich/index3.html"target="_blank" rel="noopener noreferrer">Buy</a></span>
-        <span class="t113"><a href="https://kazukimoriai.github.io/kadai02_janken_rich/index2.html"target="_blank" rel="noopener noreferrer">Sell</a></span>
-        <span class="t114">Assesment</span>
+        <span class="t112"><a href="index2.html"target="_blank" rel="noopener noreferrer">Buy</a></span>
+        <span class="t113"><a href="index3.html"target="_blank" rel="noopener noreferrer">Sell</a></span>
+        <span class="t114"><a href="index4.html"target="_blank" rel="noopener noreferrer">Review</a></span>
       </span>
       <span class="t12">LoveYourCars</span>
       <span class="t13">
@@ -60,15 +66,25 @@
   </div>
   <!-- ここまでtop -->
 
+  <!-- ボタン -->
+  <button id="openModal">Write a Review</button>
+
+  <!-- モーダルウィンドウの内容 -->
+  <div id="myModal" title="Review">
+      <div>
+        <div>名前：<input type="text" id="uname"> </div>
+        <div>評価
+            <textarea id="text" cols="30" rows="10"></textarea>
+            <button id="send">Submit</button>
+        </div>
+        <div id="output"></div>
+      </div>
+  </div>
+
   <!-- 以下口コミ -->
   <div>
-    <div> 名前：<input type="text" id="uname"> </div>
-    <div>
-        <textarea id="text" cols="30" rows="10"></textarea>
-        <button id="send">送信</button>
-    </div>
     <div id="output"></div>
-</div>
+  </div>
 
 
 
