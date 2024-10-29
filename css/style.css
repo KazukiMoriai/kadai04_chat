@@ -277,7 +277,7 @@ button#openModal:hover {
 /* 口コミ欄 */
 div#output {
     color: black;
-    height: 140px;
+    height:200px;
     overflow: auto;
     margin: 10px auto;
     width: 60%;
