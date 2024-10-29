@@ -72,12 +72,16 @@
   <!-- モーダルウィンドウの内容 -->
   <div id="myModal" title="Review">
       <div>
-        <div>名前：<input type="text" id="uname"> </div>
+        <div>取引日:
+          <input type="date" id="time">
+        </div>
+        <div>名前：
+          <input type="text" id="uname"> 
+        </div>
         <div>評価
             <textarea id="text" cols="30" rows="10"></textarea>
             <button id="send">Submit</button>
         </div>
-        <div id="output"></div>
       </div>
   </div>
 
@@ -100,12 +104,7 @@
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyDLwGz1SDAgajYmSK723ZxBbUAUMzuozWI",
-      authDomain: "gschat-3903d.firebaseapp.com",
-      projectId: "gschat-3903d",
-      storageBucket: "gschat-3903d.appspot.com",
-      messagingSenderId: "1084638522332",
-      appId: "1:1084638522332:web:f537e6511e7f7fde653d19"
+
     };
 
     // Initialize Firebase
@@ -116,6 +115,7 @@
     // 送信処理
     $("#send").on("click",function(){
     const msg = {
+        time:$("#time").val(),
         uname:$("#uname").val(),
         text:$("#text").val()
     }
@@ -128,13 +128,15 @@
           const msg = data.val();//objで受け取り
           const key = data.key;//ユニークKEYを受け取り 削除更新に必須
           let h ='<p id= "'+key+'">' ;
+              h += msg.time;
+              h += '<br>';
               h += msg.uname;
               h += '<br>';
-              h += '<span contentEditable= "true" id= "'+key+'"_update>'+msg.text+'</span>';
+              h += '<span contentEditable= "true" id= "'+key+'_update">'+msg.text+'</span>';
               h += '<span class="remove" data-key= "'+key+'">🚮</span>';
               h += '<span class="update" data-key= "'+key+'">🆙</span>';
               h += '</p>';
-          $("#output").append(h);//#outputの最後に追加
+          $("#output").prepend(h);//#outputの最後に追加
       });
 
     // 削除機能

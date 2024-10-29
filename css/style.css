@@ -273,3 +273,13 @@ button#openModal:hover {
 .ui-widget-overlay {
     background-color: rgba(0, 0, 0, 0.5); /* 背景を半透明に設定 */
 }
+
+/* 口コミ欄 */
+div#output {
+    color: black;
+    height: 140px;
+    overflow: auto;
+    margin: 10px auto;
+    width: 60%;
+    line-height: 1.5;
+}
